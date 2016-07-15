@@ -65,6 +65,7 @@
         function move($play)
         {
             $play = $play - 1;
+            conditions();
             if ($_SESSION['z'][$play] == 'vide') {
                 $_SESSION['z'][$play] = 'croix';
                 if (smartai() == false) {
@@ -77,6 +78,11 @@
                     }
                 }
             }
+            conditions();
+        }
+
+        // victory conditions
+        function conditions() {
             if ($_SESSION['z'][0] == $_SESSION['z'][1] && $_SESSION['z'][0] == $_SESSION['z'][2]) {
                 winlose(0);
             }
@@ -106,10 +112,13 @@
         // win or lose buttons
         function winlose($num)
         {
+            $_SESSION['victory'] = false;
             if ($_SESSION['z'][$num] == 'croix') {
                 echo '<div style="text-align:center;margin-bottom:30px;width:100%;"><a href="/morpion/?rejouer=ok" class="btn btn-info" style="font-size:50px;padding-left:100px;padding-right:100px;">Bravo, tu as gagné !!<br>Rejouer une partie</a></div><table id="center">';
+                $_SESSION['victory'] = true;
             } else if ($_SESSION['z'][$num] == 'rond') {
                 echo '<div style="text-align:center;margin-bottom:30px;width:100%;"><a href="/morpion/?rejouer=ok" class="btn btn-info" style="font-size:50px;padding-left:100px;padding-right:100px;">PERDU LOSER !!<br>Rejouer une partie</a></div><table id="center">';
+                $_SESSION['victory'] = true;
             }
         }
 
